@@ -50,7 +50,6 @@ class Game extends EventEmitter {
   }
 
   checkState () {
-    let emptyCells = 0
     for (let i = 0; i < this.cols; ++i) {
       for (let j = 0; j < this.rows; ++j) {
         if (this.checkCell(i, j)) {
@@ -60,8 +59,11 @@ class Game extends EventEmitter {
           this.emit('end', this.state.currentPlayer)
           return true
         }
-        if (this.state.grid[i][j] === 0) ++emptyCells
       }
+    }
+    let emptyCells = 0
+    for (let i = 0; i < this.cols; ++i) {
+      if (this.state.grid[i][0] === 0) ++emptyCells
     }
     if (emptyCells === 0) {
       this.state.status = 'finished'
